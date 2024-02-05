@@ -29,11 +29,11 @@ typedef struct NODE {
 Node* Head = NULL;    // Head Node's pointer initialize NULL
 Node* Tail = NULL;    // Tail Node's pointer initialize NULL
 
+void clearMemory();
 void insertion(int);
 void deletion(int);
 void printer();
 void searching(int);
-void clearMemory();
 
 //! - - - - - - - - - - - - - - main - - - - - - - - - - - - - - !//
 
@@ -44,13 +44,24 @@ int main() {
 
   /* select command */
   printf("연결 리스트 생성 프로그램입니다 :)\n");
-  printf("명령어 : 1 = 자료 추가 / 2 = 자료 삭제 / 3 = 자료 검색 / 4 = 전체 리스트 출력 / 5 = 종료 \n\n");
+  printf("명령어 : 0 = 종료 / 1 = 자료 추가 / 2 = 자료 삭제 / 3 = 자료 검색 / 4 = 전체 리스트 출력 \n\n");
 
   for (;;) {
     printf("명령을 입력해주세요: ");
     scanf("%d", &command);
 
+    if (Head == NULL && 1 < command && 5 > command) {
+        printf(">> 리스트가 비어있습니다 !\n");
+        continue;
+      }
+
     switch (command) {
+      case 0:
+      // exit
+        clearMemory();
+        printf(">> 메모리 할당을 정상적으로 해제한 뒤 종료하였습니다.\n");
+        return 0;  
+
       case 1:
       // insert
         printf("추가할 자료를 입력해주세요 : ");
@@ -61,37 +72,36 @@ int main() {
 
       case 2:
       // delete
-        if (Head == NULL) {
-          printf(">> 리스트가 비었습니다. \n");
-          break;
-        } else {
+        // if (Head == NULL) {                             // Head 가 NULL = 리스트에 값이 없을 때
+        //   printf(">> 리스트가 비었습니다. \n");
+        //   break;
+        // } else {
         printf("삭제할 자료를 입력해주세요 : ");
         scanf("%d", &data);
         deletion(data);
         break;
-        }
+        // }
       case 3:
       // search
-        if (Head == NULL) {
-          printf(">> 먼저 리스트에 자료를 추가해주세요!\n");
-          break;
-        } else {
+        // if (Head == NULL) {                             // Head 가 NULL = 리스트에 값이 없을 때
+        //   printf(">> 먼저 리스트에 자료를 추가해주세요!\n");
+        //   break;
+        // } else {
           printf("검색할 자료를 입력해주세요 : ");
           scanf("%d", &data);
           searching(data);
           break;
-        }
+        // }
 
       case 4:
       // print all
-        printer();
-        break;
-
-      case 5:
-      // exit
-        clearMemory();
-        printf(">> 메모리 할당을 정상적으로 해제한 뒤 종료하였습니다.\n");
-        return 0;
+        // if (Head == NULL) {                             // Head 가 NULL = 리스트에 값이 없을 때
+        //   printf(">> 먼저 리스트에 자료를 추가해주세요!\n");
+        //   break;
+        // } else {
+          printer();
+          break;
+        // }
 
       default:
       // wrong input
@@ -100,11 +110,22 @@ int main() {
       }
       printf("\n");
   }
-
   return 0;
 }
 
 //! - - - - - - - - - - - - - - function definition - - - - - - - - - - - - - - !//
+/* memory deallocation */
+void clearMemory() {
+  Node* target = Head;
+  Node* temp = target;
+
+  while(target != NULL) {
+    temp = temp->next;
+    free(target);
+    target = temp;
+  }
+}
+
 /* insertion */
 void insertion(int data) {
   Node* newNode = (Node*)malloc(sizeof(Node));
@@ -157,12 +178,6 @@ void deletion(int data) {
 /* print all data */
 void printer() {
   Node* curr = Head;
-  
-  if (Head == NULL) {
-    printf(">> 먼저 리스트에 자료를 추가해주세요!\n");
-    return;
-  }
-
   printf("------리스트------\n");
 
   while(curr != NULL) {
@@ -187,16 +202,4 @@ void searching(int data) {
     curr = curr->next;
   }
   printf(">> 값을 찾지 못했습니다.\n");
-}
-
-/* memory deallocation */
-void clearMemory() {
-  Node* target = Head;
-  Node* temp = target;
-
-  while(target != NULL) {
-    temp = temp->next;
-    free(target);
-    target = temp;
-  }
 }
