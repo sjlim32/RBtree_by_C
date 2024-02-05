@@ -39,22 +39,29 @@ void searching(int);
 
 int main() {
   int command;
-  int data;
-  Node* Result;
+  int input;
 
-  /* select command */
+  /* init ment */
   printf("연결 리스트 생성 프로그램입니다 :)\n");
   printf("명령어 : 0 = 종료 / 1 = 자료 추가 / 2 = 자료 삭제 / 3 = 자료 검색 / 4 = 전체 리스트 출력 \n\n");
 
+  /* loop select command*/
   for (;;) {
     printf("명령을 입력해주세요: ");
-    scanf("%d", &command);
+    
+    while (scanf("%d", &command) != 1) {
+      printf(">>>>> 잘못된 입력입니다. 다시 입력해주세요. <<<<<\n\n");
+      while (getchar() != '\n');
+      printf("명령을 입력해주세요: ");
+    }
 
+  /* do deletion, search, print if not NULL*/
     if (Head == NULL && 1 < command && 5 > command) {
         printf(">> 리스트가 비어있습니다 !\n");
         continue;
       }
 
+  /*switch Start*/
     switch (command) {
       case 0:
       // exit
@@ -65,56 +72,45 @@ int main() {
       case 1:
       // insert
         printf("추가할 자료를 입력해주세요 : ");
-        scanf("%d", &data);
-        insertion(data);
+        scanf("%d", &input);
+        insertion(input);
         printf(">> 추가 완료!\n");
         break;
 
       case 2:
       // delete
-        // if (Head == NULL) {                             // Head 가 NULL = 리스트에 값이 없을 때
-        //   printf(">> 리스트가 비었습니다. \n");
-        //   break;
-        // } else {
         printf("삭제할 자료를 입력해주세요 : ");
-        scanf("%d", &data);
-        deletion(data);
+        scanf("%d", &input);
+        deletion(input);
         break;
-        // }
+
       case 3:
       // search
-        // if (Head == NULL) {                             // Head 가 NULL = 리스트에 값이 없을 때
-        //   printf(">> 먼저 리스트에 자료를 추가해주세요!\n");
-        //   break;
-        // } else {
           printf("검색할 자료를 입력해주세요 : ");
-          scanf("%d", &data);
-          searching(data);
-          break;
-        // }
+          scanf("%d", &input);
+          searching(input);
+          break; 
 
       case 4:
       // print all
-        // if (Head == NULL) {                             // Head 가 NULL = 리스트에 값이 없을 때
-        //   printf(">> 먼저 리스트에 자료를 추가해주세요!\n");
-        //   break;
-        // } else {
           printer();
           break;
-        // }
 
       default:
       // wrong input
         printf(">>>>> 잘못된 입력입니다. 다시 입력해주세요. <<<<<\n");
         break;
       }
-      printf("\n");
-  }
-  return 0;
+      /* switch End */
+      printf("\n");     // command seperation
+
+  }                     // loop END
+
+  return 0;             // program END
 }
 
 //! - - - - - - - - - - - - - - function definition - - - - - - - - - - - - - - !//
-/* memory deallocation */
+/* 0 : memory deallocation */
 void clearMemory() {
   Node* target = Head;
   Node* temp = target;
@@ -126,12 +122,12 @@ void clearMemory() {
   }
 }
 
-/* insertion */
-void insertion(int data) {
+/* 1 : insertion */
+void insertion(int input) {
   Node* newNode = (Node*)malloc(sizeof(Node));
 
   if (newNode != NULL) {
-    newNode->data = data;
+    newNode->data = input;
     newNode->next = NULL;
   } else return;
   
@@ -143,10 +139,10 @@ void insertion(int data) {
   }
 }
 
-/* deletion */
-void deletion(int data) {
+/* 2 : deletion */
+void deletion(int input) {
   Node* curr = Head;
-  if (curr->data == data) {       // 삭제하는 값이 Head 노드일 경우
+  if (curr->data == input) {       // 삭제하는 값이 Head 노드일 경우
     Head = Head->next;
     free(curr);
     printf(">> Head 노드 삭제를 완료했습니다 !\n");
@@ -155,7 +151,7 @@ void deletion(int data) {
   
   Node* pre = Head;
   while(curr->next != NULL) {     // 삭제하려는 값이 중간에 있을 경우
-    if (curr->data == data) {
+    if (curr->data == input) {
       pre->next = curr->next;
       free(curr);
       printf(">> 중간 노드 삭제를 완료했습니다 !\n");
@@ -165,7 +161,7 @@ void deletion(int data) {
     curr = curr->next;
   }
   
-  if (curr->next == NULL && curr->data == data) {   // 삭제하려는 값이 tail 노드일 경우
+  if (curr->next == NULL && curr->data == input) {   // 삭제하려는 값이 tail 노드일 경우
     pre->next = NULL;
     Tail = pre;
     free(curr);
@@ -175,7 +171,7 @@ void deletion(int data) {
   printf(">> 리스트에 없는 값입니다.\n");
 }
 
-/* print all data */
+/* 3 : print all data */
 void printer() {
   Node* curr = Head;
   printf("------리스트------\n");
@@ -188,13 +184,13 @@ void printer() {
   printf("------------------\n");
 }
 
-/* searching data */
-void searching(int data) {
+/* 4 : searching data */
+void searching(int input) {
   Node* curr = Head;
   int order = 1;
 
   while(curr != NULL) {
-    if (curr->data == data) {
+    if (curr->data == input) {
       printf(">> 값을 찾았습니다 ! 순서 : %d 번째, 값 : %d\n", order, curr->data);
       return;
     }
