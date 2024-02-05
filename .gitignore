@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,c,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,c,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/c,cmake,c++,visualstudiocode,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=c,cmake,c++,visualstudiocode,macos
 
 ### C ###
 # Prerequisites
@@ -55,6 +55,42 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+### C++ ###
+# Prerequisites
+
+# Compiled Object files
+*.slo
+
+# Precompiled Headers
+
+# Compiled Dynamic libraries
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+
+# Executables
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+# External projects
+*-prefix/
+
 ### macOS ###
 # General
 .DS_Store
@@ -90,11 +126,11 @@ Temporary Items
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -105,6 +141,6 @@ Temporary Items
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
-.ionide
+.ionidehttps://swjman.tistory.com/144
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,c,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/c,cmake,c++,visualstudiocode,macos
