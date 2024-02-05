@@ -29,6 +29,8 @@ typedef struct NODE {
 Node* Head = NULL;    // Head Node's pointer initialize NULL
 Node* Tail = NULL;    // Tail Node's pointer initialize NULL
 
+int inspect_cmd_scanf();
+int inspect_inp_scanf();
 void clearMemory();
 void insertion(int);
 void deletion(int);
@@ -48,12 +50,7 @@ int main() {
   /* loop select command*/
   for (;;) {
     printf("명령을 입력해주세요: ");
-    
-    while (scanf("%d", &command) != 1) {
-      printf(">>>>> 잘못된 입력입니다. 다시 입력해주세요. <<<<<\n\n");
-      while (getchar() != '\n');
-      printf("명령을 입력해주세요: ");
-    }
+    command = inspect_cmd_scanf();
 
   /* do deletion, search, print if not NULL*/
     if (Head == NULL && 1 < command && 5 > command) {
@@ -72,7 +69,7 @@ int main() {
       case 1:
       // insert
         printf("추가할 자료를 입력해주세요 : ");
-        scanf("%d", &input);
+        input = inspect_inp_scanf();
         insertion(input);
         printf(">> 추가 완료!\n");
         break;
@@ -80,25 +77,25 @@ int main() {
       case 2:
       // delete
         printf("삭제할 자료를 입력해주세요 : ");
-        scanf("%d", &input);
+        input = inspect_inp_scanf();
         deletion(input);
         break;
 
       case 3:
       // search
-          printf("검색할 자료를 입력해주세요 : ");
-          scanf("%d", &input);
-          searching(input);
-          break; 
+        printf("검색할 자료를 입력해주세요 : ");
+        input = inspect_inp_scanf();
+        searching(input);
+        break; 
 
       case 4:
       // print all
-          printer();
-          break;
+        printer();
+        break;
 
       default:
       // wrong input
-        printf(">>>>> 잘못된 입력입니다. 다시 입력해주세요. <<<<<\n");
+        printf(">>>>> 잘못된 입력입니다 ! 0부터 4까지의 정수만 입력해주세요. <<<<<\n");
         break;
       }
       /* switch End */
@@ -110,6 +107,27 @@ int main() {
 }
 
 //! - - - - - - - - - - - - - - function definition - - - - - - - - - - - - - - !//
+
+int inspect_cmd_scanf() {
+  int input;
+  while (scanf("%d", &input) != 1) {
+    printf(">>>>> 잘못된 입력입니다 ! 0부터 4까지의 정수만 입력해주세요. <<<<<\n");
+    while (getchar() != '\n');
+    printf("명령을 다시 내려주세요 : ");
+  }
+  return input;
+}
+
+int inspect_inp_scanf() {
+  int input;
+  while (scanf("%d", &input) != 1) {
+    printf(">>>>> 잘못된 입력입니다 ! 정수만 입력해주세요. <<<<<\n");
+    while (getchar() != '\n');
+    printf("처리하고 싶은 자료를 다시 입력해주세요 : ");
+  }
+  return input;
+}
+
 /* 0 : memory deallocation */
 void clearMemory() {
   Node* target = Head;
