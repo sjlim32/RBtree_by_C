@@ -1,10 +1,17 @@
 #include <stdio.h>
 
-int main() {
-  int num;
+void func(int* arr, int num) {
+  for (int i = 0; i < num; i++) {
+    *(arr+i) += 1;
+  }
+}
 
-  scanf("%d", &num);
-  printf("num:%d\n", num);
+int main() {
+  int arr[5] = {1, 2, 3, 4, 5};
+  func(arr, 5);
+  
+  for (int i = 0; i < 5; i++)
+    printf("%d", arr[i]);
 
   return 0;
 }
